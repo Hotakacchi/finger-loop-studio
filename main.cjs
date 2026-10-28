@@ -32,7 +32,7 @@ app.whenReady().then(async()=>{
     const types=details.mediaTypes || [];
     callback(permission==='media' && origin===ORIGIN && types.includes('video') && !types.includes('audio'));
   });
-  const win=new BrowserWindow({width:1440,height:960,minWidth:740,minHeight:620,backgroundColor:'#111312',title:'Finger Loop Studio',autoHideMenuBar:true,webPreferences:{nodeIntegration:false,contextIsolation:true,sandbox:true}});
+  const win=new BrowserWindow({width:1440,height:960,minWidth:740,minHeight:620,backgroundColor:'#111312',title:'Finger Loop Studio',icon:path.join(__dirname,'build','icon.ico'),autoHideMenuBar:true,webPreferences:{nodeIntegration:false,contextIsolation:true,sandbox:true}});
   win.webContents.setWindowOpenHandler(({url})=>{if(url.startsWith('https://'))shell.openExternal(url);return {action:'deny'}});
   win.webContents.on('will-navigate',(event,url)=>{if(new URL(url).origin!==ORIGIN)event.preventDefault()});
   await win.loadURL(ORIGIN);

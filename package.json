@@ -1,18 +1,39 @@
 {
   "name": "finger-loop-studio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "指先で描く音楽スタジオ",
   "main": "main.cjs",
   "author": "Finger Loop Studio",
   "license": "MIT",
-  "scripts": {"start": "electron .", "dist": "electron-builder --win portable --x64"},
-  "devDependencies": {"electron": "^36.9.5", "electron-builder": "^26.0.12"},
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable --x64"
+  },
+  "devDependencies": {
+    "electron": "^36.9.5",
+    "electron-builder": "^26.0.12"
+  },
   "build": {
     "appId": "studio.fingerloop.desktop",
     "productName": "Finger Loop Studio",
-    "directories": {"output": "release"},
-    "files": ["main.cjs", "web/**/*", "package.json"],
-    "win": {"target": ["portable"], "signAndEditExecutable": false},
-    "portable": {"artifactName": "Finger-Loop-Studio-${version}-Windows-x64.exe"}
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.cjs",
+      "web/**/*",
+      "build/icon.ico",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "icon": "build/icon.ico",
+      "signExecutable": false
+    },
+    "portable": {
+      "artifactName": "Finger-Loop-Studio-${version}-Windows-x64.exe"
+    }
   }
 }
