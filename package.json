@@ -4,7 +4,7 @@
   "description": "指先で描く音楽スタジオ",
   "main": "main.cjs",
   "author": "Finger Loop Studio",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {"start": "electron .", "dist": "electron-builder --win portable --x64"},
   "devDependencies": {"electron": "^36.9.5", "electron-builder": "^26.0.12"},
   "build": {
