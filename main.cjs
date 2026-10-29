@@ -12,7 +12,7 @@ else app.on('second-instance', () => { const win=BrowserWindow.getAllWindows()[0
 function startServer(){return new Promise((resolve,reject)=>{
   server=http.createServer((req,res)=>{
     if(req.method!=='GET' && req.method!=='HEAD'){res.writeHead(405);return res.end()}
-    const files={'/': ['index.html','text/html; charset=utf-8'], '/index.html':['index.html','text/html; charset=utf-8'], '/app.js':['app.js','text/javascript; charset=utf-8']};
+    const files={'/': ['index.html','text/html; charset=utf-8'], '/index.html':['index.html','text/html; charset=utf-8'], '/app.js':['app.js','text/javascript; charset=utf-8'], '/audio-engine.mjs':['audio-engine.mjs','text/javascript; charset=utf-8']};
     const item=files[new URL(req.url,ORIGIN).pathname];
     if(!item){res.writeHead(404);return res.end('Not found')}
     const file=path.join(__dirname,'web',item[0]);
@@ -32,7 +32,7 @@ app.whenReady().then(async()=>{
     const types=details.mediaTypes || [];
     callback(permission==='media' && origin===ORIGIN && types.includes('video') && !types.includes('audio'));
   });
-  const win=new BrowserWindow({width:1440,height:960,minWidth:740,minHeight:620,backgroundColor:'#111312',title:'Finger Loop Studio',icon:path.join(__dirname,'build','icon.ico'),autoHideMenuBar:true,webPreferences:{nodeIntegration:false,contextIsolation:true,sandbox:true}});
+  const win=new BrowserWindow({width:1440,height:960,minWidth:740,minHeight:620,backgroundColor:'#111312',title:'Finger Loop Studio',icon:path.join(__dirname,'build',process.platform==='darwin'?'icon.png':'icon.ico'),autoHideMenuBar:true,webPreferences:{nodeIntegration:false,contextIsolation:true,sandbox:true}});
   win.webContents.setWindowOpenHandler(({url})=>{if(url.startsWith('https://'))shell.openExternal(url);return {action:'deny'}});
   win.webContents.on('will-navigate',(event,url)=>{if(new URL(url).origin!==ORIGIN)event.preventDefault()});
   await win.loadURL(ORIGIN);

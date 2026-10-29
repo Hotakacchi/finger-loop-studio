@@ -1,13 +1,15 @@
 {
   "name": "finger-loop-studio",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "指先で描く音楽スタジオ",
   "main": "main.cjs",
   "author": "Finger Loop Studio",
   "license": "MIT",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --win portable --x64"
+    "dist": "electron-builder --win portable --x64",
+    "test": "node --test test/*.test.mjs",
+    "dist:mac": "electron-builder --mac zip --x64 --arm64"
   },
   "devDependencies": {
     "electron": "^36.9.5",
@@ -23,6 +25,7 @@
       "main.cjs",
       "web/**/*",
       "build/icon.ico",
+      "build/icon.png",
       "package.json"
     ],
     "win": {
@@ -31,6 +34,12 @@
       ],
       "icon": "build/icon.ico",
       "signExecutable": false
+    },
+    "mac": {
+      "target": ["zip"],
+      "icon": "build/icon.png",
+      "identity": null,
+      "extendInfo": {"NSCameraUsageDescription": "指先を追跡して音楽を作るためにカメラを使用します。"}
     },
     "portable": {
       "artifactName": "Finger-Loop-Studio-${version}-Windows-x64.exe"
