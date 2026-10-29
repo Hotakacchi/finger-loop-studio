@@ -1,6 +1,6 @@
 {
   "name": "finger-loop-studio",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "指先で描く音楽スタジオ",
   "main": "main.cjs",
   "author": "Finger Loop Studio",
@@ -12,7 +12,7 @@
     "predist:mac": "node scripts/prepare-assets.cjs",
     "dist": "electron-builder --win portable --x64 --publish never",
     "test": "node --test test/*.test.mjs",
-    "dist:mac": "electron-builder --mac zip --x64 --arm64 --publish never"
+    "dist:mac": "electron-builder --mac zip --arm64 --publish never"
   },
   "devDependencies": {
     "@mediapipe/tasks-vision": "0.10.22-rc.20250304",
@@ -44,7 +44,8 @@
         "zip"
       ],
       "icon": "build/icon.png",
-      "identity": null,
+      "identity": "-",
+      "hardenedRuntime": false,
       "extendInfo": {
         "NSCameraUsageDescription": "指先を追跡して音楽を作るためにカメラを使用します。"
       }
