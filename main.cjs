@@ -13,7 +13,9 @@ function startServer(){return new Promise((resolve,reject)=>{
   server=http.createServer((req,res)=>{
     if(req.method!=='GET' && req.method!=='HEAD'){res.writeHead(405);return res.end()}
     const files={'/': ['index.html','text/html; charset=utf-8'], '/index.html':['index.html','text/html; charset=utf-8'], '/app.js':['app.js','text/javascript; charset=utf-8'], '/audio-engine.mjs':['audio-engine.mjs','text/javascript; charset=utf-8']};
-    const item=files[new URL(req.url,ORIGIN).pathname];
+    const pathname=new URL(req.url,ORIGIN).pathname;
+    const assets={'/vendor/vision_bundle.mjs':['vendor/vision_bundle.mjs','text/javascript; charset=utf-8'],'/vendor/hand_landmarker.task':['vendor/hand_landmarker.task','application/octet-stream'],'/vendor/wasm/vision_wasm_internal.js':['vendor/wasm/vision_wasm_internal.js','text/javascript; charset=utf-8'],'/vendor/wasm/vision_wasm_internal.wasm':['vendor/wasm/vision_wasm_internal.wasm','application/wasm'],'/vendor/wasm/vision_wasm_nosimd_internal.js':['vendor/wasm/vision_wasm_nosimd_internal.js','text/javascript; charset=utf-8'],'/vendor/wasm/vision_wasm_nosimd_internal.wasm':['vendor/wasm/vision_wasm_nosimd_internal.wasm','application/wasm']};
+    const item=files[pathname]||assets[pathname];
     if(!item){res.writeHead(404);return res.end('Not found')}
     const file=path.join(__dirname,'web',item[0]);
     res.writeHead(200,{'Content-Type':item[1],'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});
@@ -26,6 +28,9 @@ function startServer(){return new Promise((resolve,reject)=>{
 app.whenReady().then(async()=>{
   try{await startServer()}catch(err){dialog.showErrorBox('Finger Loop Studio',`アプリを起動できませんでした。ポート ${PORT} が使用されていないか確認してください。\n\n${err.message}`);app.quit();return}
   const ses=session.defaultSession;
+  ses.webRequest.onBeforeRequest({urls:['http://*/*','https://*/*']},(details,callback)=>{
+    callback({cancel:new URL(details.url).origin!==ORIGIN});
+  });
   ses.setPermissionCheckHandler((webContents,permission,origin,details)=>permission==='media' && origin===ORIGIN && details.mediaType!=='audio');
   ses.setPermissionRequestHandler((webContents,permission,callback,details)=>{
     const origin=details.requestingUrl ? new URL(details.requestingUrl).origin : '';
