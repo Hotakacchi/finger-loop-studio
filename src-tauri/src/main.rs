@@ -12,7 +12,7 @@ fn serve() -> Result<(), String> {
         let path = if raw == "/" { "index.html" } else { raw.trim_start_matches('/') };
         if request.method() != &tiny_http::Method::Get || path.contains("..") { let _ = request.respond(Response::empty(StatusCode(404))); continue; }
         if let Some(file) = WEB.get_file(path) {
-            let mime = match path.rsplit('.').next().unwrap_or("") { "html" => "text/html; charset=utf-8", "js" | "mjs" => "text/javascript; charset=utf-8", "wasm" => "application/wasm", _ => "application/octet-stream" };
+            let mime = match path.rsplit('.').next().unwrap_or("") { "html" => "text/html; charset=utf-8", "css" => "text/css; charset=utf-8", "js" | "mjs" => "text/javascript; charset=utf-8", "wasm" => "application/wasm", _ => "application/octet-stream" };
             let header = Header::from_bytes("Content-Type", mime).unwrap();
             let response = Response::new(StatusCode(200), vec![header], Cursor::new(file.contents()), Some(file.contents().len()), None);
             let _ = request.respond(response);
