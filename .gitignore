@@ -2,3 +2,5 @@ node_modules/
 release/
 *.log
 web/vendor/
+src-tauri/target/
+src-tauri/icons/

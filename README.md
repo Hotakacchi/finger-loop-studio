@@ -1,6 +1,6 @@
 # Finger Loop Studio
 
-カメラで指先を追い、空中に描いた線で音楽を作る Windows アプリです。マウスやタッチでも演奏できます。
+カメラで指先を追い、空中に描いた線で音楽を作る Windows・Mac アプリです。マウスやタッチでも演奏できます。Tauri と OS 標準の WebView を使用します。
 
 ## 使い方
 
@@ -15,7 +15,7 @@ Windows x64 用のポータブル版を [Releases](https://github.com/Hotakacchi
 
 ## 開発
 
-Node.js と npm を用意し、以下を実行します。
+Node.js、npm、Rust と Tauri のシステム依存関係を用意し、以下を実行します。
 
 ```sh
 npm ci
@@ -23,6 +23,6 @@ npm start
 npm run dist
 ```
 
-`release/` にインストーラー不要の Windows x64 用 exe が作成されます。Mac 上では `npm run dist:mac` で Mac 版を作れます。ビルド時は npm の依存関係と手の認識モデルの取得にインターネット接続が必要です。実行時は不要です。アプリはローカルの `127.0.0.1:49185` を使用します。別のアプリが使用中の場合は起動できません。
+`src-tauri/target/release/` にインストーラー不要の Windows x64 用 exe が作成されます。Mac 上では `npm run dist:mac` で Mac 版を作れます。ビルド時は npm・Rust の依存関係と手の認識モデルの取得にインターネット接続が必要です。実行時は不要です。アプリはローカルの `127.0.0.1:49185` を使用します。別のアプリが使用中の場合は起動できません。Windows 版は WebView2 Runtime が必要です。
 
 手の認識には [MediaPipe Tasks](https://github.com/google-ai-edge/mediapipe) を使用しています。MediaPipe は Apache License 2.0 で提供されています。
